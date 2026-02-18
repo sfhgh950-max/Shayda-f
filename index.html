@@ -1068,8 +1068,24 @@ async function analyzeJob() {
         }
 
         const data = await response.json();
-        analysisData.competencies = data.competencies || [];
-        
+const data = await response.json();
+
+const rawCompetencies = data.competencies || [];
+analysisData.competencies = rawCompetencies.map((item, index) => {
+    // اگه item یه رشته باشه (که احتمالاً هست)
+    if (typeof item === 'string') {
+        return {
+            code: `CMP-${index + 1}`,
+            title: item,
+            definition: 'تعریف خودکار توسط سیستم',
+            category: 'عمومی',
+            source: 'تحلیل هوشمند',
+            risks: ['نیاز به بررسی تخصصی']  // یه ریسک پیش‌فرض
+        };
+    }
+    // اگه اتفاقاً خودش آبجکت بود (برای آینده)
+    return item;
+});        
         displayResults();
         switchTab(2);
     } catch (error) {
