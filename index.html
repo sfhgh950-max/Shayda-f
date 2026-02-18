@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سامانه شایدا - ایران خودرو خراسان</title>
+    
+    <!--  فونت‌ها و کتابخانه ها -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script>const SERVER_URL = 'https://shayda.liara.run/api';</script>
+    
+    <!-- کتابخانه‌های ضروری -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
+    <style>
+        :root {
+            --ikco-blue: #0054a6;      /* آبی ایران خودرو */
+            --ikco-blue-light: #0072ce; /* آبی روشن */
+            --ikco-blue-dark: #003876;  /* آبی تیره */
+            --white: #ffffff;
+            --light-gray: #f5f7fa;
+            --medium-gray: #e0e6ed;
+            --dark-gray: #2d3748;
+            --success: #38a169;
+            --warning: #d69e2e;
+            --danger: #e53e3e;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background: linear-gradient(135deg, var(--light-gray) 0%, var(--white) 100%);
+            min-height: 100vh;
+            color: var(--dark-gray);
+            line-height: 1.6;
+        }
+        
+        /* واترمارک */
+        .watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 100px;
+            color: rgba(0, 84, 166, 0.05);
+            font-weight: 900;
+            z-index: 0;
+            white-space: nowrap;
+            pointer-events: none;
+            user-select: none;
+        }
+        
+        /* کانتینر اصلی */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            position: relative;
+            z-index: 1;
+            border: 1px solid var(--medium-gray);
+        }
+        
+        /* هدر با لوگو */
+        .header-section {
+            background: linear-gradient(135deg, var(--ikco-blue) 0%, var(--ikco-blue-dark) 100%);
+            padding: 30px 40px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.1), transparent);
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            margin-bottom: 20px;
+        }
+        
+        .ikco-logo-placeholder {
+            width: 120px;
+            height: 120px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: 3px solid var(--ikco-blue);
+            padding: 10px;
+            text-align: center;
+        }
+        
+        .logo-text {
+            flex: 1;
+        }
+        
+        .logo-text h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: white;
+        }
+        
+        .logo-text .subtitle {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 300;
+        }
+        
+        /* واحد منابع انسانی */
+        .hr-unit {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 15px 25px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .hr-unit h3 {
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .hr-details {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 14px;
+            display: flex;
+            gap: 20px;
+        }
+        
+        .hr-details span {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* نوار تب‌ها */
+        .tabs-container {
+            background: white;
+            border-bottom: 2px solid var(--medium-gray);
+            display: flex;
+        }
+        
+        .tab {
+            padding: 18px 30px;
+            background: none;
+            border: none;
+            font-family: inherit;
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--dark-gray);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-left: 1px solid var(--medium-gray);
+        }
+        
+        .tab:first-child {
+            border-left: none;
+        }
+        
+        .tab:hover {
+            background: rgba(0, 84, 166, 0.05);
+            color: var(--ikco-blue);
+        }
+        
+        .tab.active {
+            color: var(--ikco-blue);
+            background: white;
+            font-weight: 600;
+        }
+        
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--ikco-blue);
+        }
+        
+        /* محتوای تب‌ها */
+        .tab-content {
+            padding: 30px;
+            display: none;
+            min-height: 500px;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* فرم‌ها */
+        .form-section {
+            background: var(--light-gray);
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border-right: 4px solid var(--ikco-blue);
+        }
+        
+        .form-section h2 {
+            color: var(--ikco-blue);
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(0, 84, 166, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 22px;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark-gray);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--medium-gray);
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 16px;
+            transition: all 0.3s;
+            background: white;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--ikco-blue);
+            box-shadow: 0 0 0 3px rgba(0, 84, 166, 0.1);
+        }
+        
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+            line-height: 1.6;
+        }
+        
+        select.form-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%230054a6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: left 16px center;
+            padding-left: 45px;
+        }
+        
+        /* دکمه‌ها */
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            min-width: 160px;
+        }
+        
+        .btn-primary {
+            background: var(--ikco-blue);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: var(--ikco-blue-light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 84, 166, 0.2);
+        }
+        
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+        
+        .btn-warning {
+            background: var(--warning);
+            color: white;
+        }
+        
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+        
+        /* آمار */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border-top: 3px solid var(--ikco-blue);
+        }
+        
+        .stat-icon {
+            font-size: 32px;
+            margin-bottom: 15px;
+            color: var(--ikco-blue);
+        }
+        
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--dark-gray);
+            margin: 10px 0;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        /* کارت شایستگی */
+        .competency-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border-right: 3px solid var(--ikco-blue);
+        }
+        
+        .competency-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+        
+        .competency-title {
+            color: var(--dark-gray);
+            font-size: 18px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .competency-code {
+            background: var(--ikco-blue);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 500;
+            font-size: 13px;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            margin: 5px 5px 0 0;
+        }
+        
+        .badge-primary {
+            background: rgba(0, 84, 166, 0.1);
+            color: var(--ikco-blue);
+            border: 1px solid rgba(0, 84, 166, 0.2);
+        }
+        
+        .badge-danger {
+            background: rgba(229, 62, 62, 0.1);
+            color: var(--danger);
+            border: 1px solid rgba(229, 62, 62, 0.2);
+        }
+        
+        /* جدول سنجش کیفی */
+        .assessment-section {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 30px;
+            border: 2px solid var(--ikco-blue);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .assessment-section h2 {
+            color: var(--ikco-blue);
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(0, 84, 166, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 22px;
+        }
+        
+        .assessment-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 14px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .assessment-table th {
+            background: var(--ikco-blue);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: 600;
+            border: 1px solid var(--ikco-blue-dark);
+        }
+        
+        .assessment-table td {
+            padding: 12px;
+            border: 1px solid var(--medium-gray);
+            text-align: center;
+            vertical-align: top;
+        }
+        
+        .assessment-table tr:nth-child(even) {
+            background: var(--light-gray);
+        }
+        
+        .assessment-table tr:hover {
+            background: rgba(0, 84, 166, 0.05);
+        }
+        
+        .assessment-level {
+            font-weight: 600;
+            color: var(--ikco-blue);
+        }
+        
+        .assessment-description {
+            font-size: 13px;
+            color: #555;
+            text-align: right;
+            line-height: 1.5;
+        }
+        
+        /* فوتر */
+        .footer {
+            background: var(--ikco-blue-dark);
+            color: white;
+            padding: 25px 40px;
+            text-align: center;
+            border-top: 3px solid var(--ikco-blue-light);
+        }
+        
+        .hr-training {
+            font-size: 16px;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+        
+        .hr-training span {
+            color: #a3d5ff;
+            font-weight: 500;
+        }
+        
+        .copyright {
+            font-size: 14px;
+            color: #a3d5ff;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* وظایف */
+        .duty-item {
+            background: white;
+            padding: 12px 15px;
+            margin: 8px 0;
+            border-radius: 6px;
+            border: 1px solid var(--medium-gray);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .duty-code {
+            background: var(--ikco-blue);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        /* واکنش‌گرا */
+        @media (max-width: 768px) {
+            .header-section {
+                padding: 20px;
+            }
+            
+            .logo-container {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+            
+            .hr-unit {
+                flex-direction: column;
+                gap: 12px;
+                text-align: center;
+            }
+            
+            .hr-details {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .tabs-container {
+                flex-wrap: wrap;
+            }
+            
+            .tab {
+                flex: 1;
+                min-width: 110px;
+                padding: 15px;
+                justify-content: center;
+                font-size: 14px;
+            }
+            
+            .tab-content {
+                padding: 20px;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .btn {
+                min-width: 100%;
+            }
+            
+            .watermark {
+                font-size: 50px;
+            }
+            
+            .assessment-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- واترمارک -->
+    <div class="watermark">
+        واحد منابع انسانی
+        <br>
+        آموزش و توسعه مهارت
+    </div>
+    
+    <div class="main-container">
+        <!-- هدر -->
+        <div class="header-section">
+            <div class="logo-container">
+                <!-- لوگوی ایران خودرو خراسان -->
+                <div class="ikco-logo-placeholder">
+                    <span style="font-size: 18px; font-weight: bold; color: #0054a6;">ایران خودرو</span>
+                    <span style="font-size: 14px; color: #003876; display: block; margin-top: 5px;">خراسان</span>
+                </div>
+                <div class="logo-text">
+                    <h1>ایران خودرو خراسان</h1>
+                    <p class="subtitle">سامانه هوشمند شناسایی و تحلیل شایستگی‌های سازمانی</p>
+                </div>
+            </div>
+            
+            <div class="hr-unit">
+                <h3>
+                    <i class="fas fa-users"></i>
+                    واحد منابع انسانی
+                </h3>
+                <div class="hr-details">
+                    <span><i class="fas fa-graduation-cap"></i> آموزش و توسعه مهارت</span>
+                    <span><i class="fas fa-chart-line"></i> مدیریت استعدادها</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- تب‌ها -->
+        <div class="tabs-container">
+            <button class="tab active" data-tab="1">
+                <i class="fas fa-edit"></i>
+                ورود اطلاعات
+            </button>
+            <button class="tab" data-tab="2">
+                <i class="fas fa-chart-bar"></i>
+                تحلیل و نتایج
+            </button>
+            <button class="tab" data-tab="3">
+                <i class="fas fa-download"></i>
+                خروجی‌ها
+            </button>
+        </div>
+        
+        <!-- تب 1: ورود اطلاعات -->
+        <div class="tab-content active" id="tab1">
+            <div class="form-section">
+                <h2><i class="fas fa-user-tie"></i> مشخصات پست سازمانی</h2>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label><i class="fas fa-briefcase"></i> عنوان پست سازمانی:</label>
+                        <input type="text" class="form-control" id="jobTitle" placeholder="مثال: مدیر منابع انسانی">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><i class="fas fa-building"></i> واحد سازمانی:</label>
+                        <input type="text" class="form-control" id="department" placeholder="مثال: منابع انسانی">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><i class="fas fa-industry"></i> حوزه فعالیت:</label>
+                        <select class="form-control" id="industry">
+                            <option value="production">تولید و عملیات</option>
+                            <option value="engineering">مهندسی و طراحی</option>
+                            <option value="quality">کنترل کیفیت</option>
+                            <option value="supply">زنجیره تأمین</option>
+                            <option value="sales">فروش و بازاریابی</option>
+                            <option value="hr">منابع انسانی</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><i class="fas fa-layer-group"></i> سطح شغل:</label>
+                        <select class="form-control" id="jobLevel">
+                            <option value="entry">متصدی</option>
+                            <option value="entry">کاردان</option>
+                            <option value="senior">کارشناس</option>
+                            <option value="supervisor">مسئول قسمت</option>
+                            <option value="manager">مسئول بخش</option>
+                            <option value="director">مدیر</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-tasks"></i> شرح وظایف اصلی (هر وظیفه در یک خط):</label>
+                    <textarea class="form-control" id="duties" placeholder="وظایف شغلی را وارد کنید... (هر وظیفه در یک خط جداگانه)
+
+مثال:
+تدوین و اجرای برنامه‌های آموزشی کارکنان
+برگزاری دوره‌های آموزشی تخصصی
+ارزیابی اثربخشی دوره‌های آموزشی
+تهیه و تدوین محتوای آموزشی
+برگزاری کارگاه‌های مهارت‌افزایی">تدوین و اجرای برنامه‌های آموزشی کارکنان
+برگزاری دوره‌های آموزشی تخصصی
+ارزیابی اثربخشی دوره‌های آموزشی
+تهیه و تدوین محتوای آموزشی
+برگزاری کارگاه‌های مهارت‌افزایی</textarea>
+                </div>
+                
+                <div class="btn-group">
+                    <button class="btn btn-primary" id="analyzeBtn">
+                        <i class="fas fa-robot"></i>
+                        آغاز تحلیل
+                    </button>
+                    <button class="btn btn-warning" id="manualBtn">
+                        <i class="fas fa-user-edit"></i>
+                        تحلیل دستی
+                    </button>
+                    <button class="btn btn-danger" id="clearBtn">
+                        <i class="fas fa-trash"></i>
+                        پاک کردن فرم
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- تب 2: نتایج -->
+        <div class="tab-content" id="tab2">
+            <div id="resultsContainer" style="display: none;">
+                <!-- آمارها -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-briefcase"></i></div>
+                        <div class="stat-value" id="statJobTitle">-</div>
+                        <div class="stat-label">عنوان شغل</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-tasks"></i></div>
+                        <div class="stat-value" id="statDuties">0</div>
+                        <div class="stat-label">تعداد وظایف</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-graduation-cap"></i></div>
+                        <div class="stat-value" id="statCompetencies">0</div>
+                        <div class="stat-label">شایستگی‌ها</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                        <div class="stat-value" id="statRiskLevel">-</div>
+                        <div class="stat-label">سطح ریسک</div>
+                    </div>
+                </div>
+                
+                <!-- وظایف -->
+                <div class="form-section">
+                    <h2><i class="fas fa-list-ol"></i> وظایف کدگذاری شده</h2>
+                    <div id="dutiesList"></div>
+                </div>
+                
+                <!-- شایستگی‌ها -->
+                <div id="competenciesContainer"></div>
+                
+                <!-- جدول سنجش کیفی -->
+                <div class="assessment-section">
+                    <h2><i class="fas fa-table"></i> جدول سنجش کیفی</h2>
+                    <table class="assessment-table" id="qualitativeTable">
+                        <thead>
+                            <tr>
+                                <th>کد شایستگی</th>
+                                <th>نام شایستگی</th>
+                                <th>طیف سنجش</th>
+                            </tr>
+                        </thead>
+                        <tbody id="qualitativeTableBody">
+                            <!-- ردیف‌های جدول اینجا پر می‌شوند -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="btn-group">
+                    <button class="btn btn-primary" id="editBtn">
+                        <i class="fas fa-edit"></i>
+                        ویرایش اطلاعات
+                    </button>
+                    <button class="btn btn-success" id="exportBtn">
+                        <i class="fas fa-download"></i>
+                        تهیه خروجی
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- تب 3: خروجی -->
+        <div class="tab-content" id="tab3">
+            <div class="form-section">
+                <h2><i class="fas fa-download"></i> گزینه‌های خروجی</h2>
+                
+                <p style="margin-bottom: 20px; color: #666;">لطفاً یکی از گزینه‌های زیر را برای دریافت گزارش انتخاب کنید:</p>
+                
+                <div class="btn-group" style="flex-direction: column; align-items: stretch; gap: 12px;">
+                    <button class="btn btn-success" id="excelBtn">
+                        <i class="fas fa-file-excel"></i>
+                        دانلود فایل Excel
+                    </button>
+                    
+                    <button class="btn btn-danger" id="pdfBtn">
+                        <i class="fas fa-file-pdf"></i>
+                        دانلود فایل PDF
+                    </button>
+                    
+                    <button class="btn btn-primary" id="htmlBtn">
+                        <i class="fas fa-file-code"></i>
+                        دانلود فایل HTML
+                    </button>
+                    
+                    <button class="btn btn-warning" id="printBtn">
+                        <i class="fas fa-print"></i>
+                        چاپ گزارش
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- فوتر -->
+        <div class="footer">
+            <div class="hr-training">
+                <i class="fas fa-graduation-cap"></i>
+                <strong>واحد منابع انسانی</strong> - 
+                <span>آموزش و توسعه مهارت</span>
+            </div>
+            <p style="color: #ccc; margin-bottom: 10px; font-size: 15px;">سامانه شایدا - شناسایی هوشمند شایستگی‌های سازمانی</p>
+            <div class="copyright">
+                کلیه حقوق این سامانه متعلق به 
+                <strong>ایران خودرو خراسان</strong>
+                می‌باشد © ۱۴۰۳
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // داده‌های ذخیره‌سازی
+        const analysisData = {
+            jobTitle: '',
+            department: '',
+            industry: '',
+            jobLevel: '',
+            duties: [],
+            competencies: []
+        };
+
+        // پایگاه داده شایستگی‌ها
+        const competencyDatabase = {
+            production: [
+                {
+                    code: "IK-PRO-01",
+                    title: "مدیریت خط تولید",
+                    definition: "توانایی مدیریت و بهینه‌سازی خطوط تولید با رویکرد تولید ناب",
+                    category: "فنی-تولیدی",
+                    source: "سیستم تولید تویوتا (TPS)",
+                    risks: ["توقف خط تولید", "کاهش کیفیت محصول", "افزایش ضایعات"]
+                },
+                {
+                    code: "IK-PRO-02",
+                    title: "کنترل کیفیت تولید",
+                    definition: "مهارت در پیاده‌سازی سیستم‌های کنترل کیفیت در فرآیند تولید",
+                    category: "کیفیت",
+                    source: "استاندارد IATF 16949",
+                    risks: ["عدم رضایت مشتری", "برگشت محصول", "تخریب برند"]
+                },
+                {
+                    code: "IK-PRO-03",
+                    title: "نگهداری و تعمیرات پیشگیرانه",
+                    definition: "توانایی برنامه‌ریزی و اجرای برنامه‌های نگهداری پیشگیرانه",
+                    category: "فنی",
+                    source: "استانداردهای TPM",
+                    risks: ["خرابی تجهیزات", "توقف تولید", "افزایش هزینه‌های تعمیرات"]
+                }
+            ],
+            engineering: [
+                {
+                    code: "IK-ENG-01",
+                    title: "طراحی مهندسی خودرو",
+                    definition: "توانایی طراحی و توسعه سیستم‌های مکانیکی و الکترونیکی خودرو",
+                    category: "مهندسی",
+                    source: "استانداردهای طراحی خودرو",
+                    risks: ["نقص طراحی", "افزایش هزینه‌ها", "تأخیر در تولید"]
+                },
+                {
+                    code: "IK-ENG-02",
+                    title: "تحلیل المان محدود (FEA)",
+                    definition: "مهارت در تحلیل و بهینه‌سازی طراحی با استفاده از نرم‌افزارهای تحلیل المان محدود",
+                    category: "مهندسی",
+                    source: "استانداردهای CAE",
+                    risks: ["خطا در تحلیل", "عدم بهینه‌سازی", "هزینه‌های اضافی طراحی"]
+                }
+            ],
+            quality: [
+                {
+                    code: "IK-QLT-01",
+                    title: "مدیریت سیستم کیفیت",
+                    definition: "توانایی طراحی و اجرای سیستم جامع مدیریت کیفیت",
+                    category: "کیفیت",
+                    source: "ISO 9001:2015",
+                    risks: ["عدم انطباق استاندارد", "افزایش هزینه‌های کیفیت", "از دست دادن بازار"]
+                }
+            ],
+            hr: [
+                {
+                    code: "IK-HR-01",
+                    title: "مدیریت توسعه منابع انسانی",
+                    definition: "توانایی برنامه‌ریزی و اجرای برنامه‌های توسعه منابع انسانی",
+                    category: "منابع انسانی",
+                    source: "مدل شایستگی SHRM",
+                    risks: ["عدم توسعه کارکنان", "کاهش بهره‌وری", "افزایش جابجایی نیرو"]
+                },
+                {
+                    code: "IK-HR-02",
+                    title: "آموزش و توسعه مهارت‌ها",
+                    definition: "مهارت در طراحی و اجرای برنامه‌های آموزشی مؤثر",
+                    category: "آموزش",
+                    source: "مدل کرک پاتریک",
+                    risks: ["عدم اثربخشی آموزش", "اتلاف منابع", "عدم ارتقاء مهارت‌ها"]
+                }
+            ],
+            general: [
+                {
+                    code: "IK-MGT-01",
+                    title: "رهبری تیم‌های کاری",
+                    definition: "توانایی هدایت و انگیزش تیم‌های کاری برای دستیابی به اهداف سازمان",
+                    category: "مدیریتی",
+                    source: "مدل رهبری ایران خودرو",
+                    risks: ["کاهش بهره‌وری", "افزایش جابجایی نیرو", "عدم تحقق اهداف"]
+                },
+                {
+                    code: "IK-COM-01",
+                    title: "ارتباط مؤثر سازمانی",
+                    definition: "توانایی برقراری ارتباط مؤثر با سطوح مختلف سازمانی",
+                    category: "ارتباطی",
+                    source: "استانداردهای ارتباطی",
+                    risks: ["سوءتفاهم سازمانی", "کاهش همکاری", "خطا در اجرای دستورات"]
+                }
+            ]
+        };
+
+        // طیف‌های سنجش کیفی
+        const assessmentSpectrum = [
+            "عدم آشنایی",
+            "آشنایی اولیه",
+            "آشنایی نسبی",
+            "کاربرد در موقعیت‌های ساده",
+            "کاربرد مستقل",
+            "کاربرد حرفه‌ای",
+            "تسلط کامل",
+            "رهبری تخصصی",
+            "نوآوری و توسعه",
+            "مرجعیت سازمانی"
+        ];
+
+        // مدیریت تب‌ها
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                const tabId = this.getAttribute('data-tab');
+                
+                // حذف کلاس active از همه تب‌ها
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                // اضافه کردن کلاس active به تب انتخاب شده
+                this.classList.add('active');
+                document.getElementById(`tab${tabId}`).classList.add('active');
+            });
+        });
+
+        // دکمه آغاز تحلیل
+        document.getElementById('analyzeBtn').addEventListener('click', analyzeJob);
+
+        // دکمه پاک کردن فرم
+        document.getElementById('clearBtn').addEventListener('click', clearForm);
+
+        // دکمه تحلیل دستی
+        document.getElementById('manualBtn').addEventListener('click', manualAnalysis);
+
+        // دکمه ویرایش
+        document.getElementById('editBtn').addEventListener('click', () => switchTab(1));
+
+        // دکمه خروجی
+        document.getElementById('exportBtn').addEventListener('click', () => switchTab(3));
+
+        // دکمه‌های خروجی
+        document.getElementById('excelBtn').addEventListener('click', exportToExcel);
+        document.getElementById('pdfBtn').addEventListener('click', exportToPDF);
+        document.getElementById('htmlBtn').addEventListener('click', exportToHTML);
+        document.getElementById('printBtn').addEventListener('click', printReport);
+
+        // تابع ساده برای تغییر تب
+        function switchTab(tabNumber) {
+            const tabs = document.querySelectorAll('.tab');
+            const contents = document.querySelectorAll('.tab-content');
+            
+            tabs.forEach((tab, index) => {
+                if (index === tabNumber - 1) {
+                    tab.classList.add('active');
+                } else {
+                    tab.classList.remove('active');
+                }
+            });
+            
+            contents.forEach((content, index) => {
+                if (index === tabNumber - 1) {
+                    content.classList.add('active');
+                } else {
+                    content.classList.remove('active');
+                }
+            });
+        }
+
+        // تابع تحلیل شغل
+async function analyzeJob() {
+    // جمع‌آوری اطلاعات از فرم
+    analysisData.jobTitle = document.getElementById('jobTitle').value.trim();
+    analysisData.department = document.getElementById('department').value.trim();
+    analysisData.industry = document.getElementById('industry').value;
+    analysisData.jobLevel = document.getElementById('jobLevel').value;
+    
+    const dutiesText = document.getElementById('duties').value.trim();
+    analysisData.duties = dutiesText.split('\n').map(d => d.trim()).filter(d => d.length > 0);
+    
+    if (!analysisData.jobTitle || analysisData.duties.length === 0) {
+        alert('لطفاً عنوان شغل و حداقل یک وظیفه وارد کنید');
+        return;
+    }
+
+    try {
+        const response = await fetch(`${SERVER_URL}/analyze-with-ai`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                duties: analysisData.duties,
+                industry: analysisData.industry,
+                jobLevel: analysisData.jobLevel
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error(`خطای سرور: ${response.status}`);
+        }
+
+        const data = await response.json();
+        analysisData.competencies = data.competencies || [];
+        
+        displayResults();
+        switchTab(2);
+    } catch (error) {
+        console.error('خطا:', error);
+        alert('خطا در ارتباط با سرور. از حالت آفلاین استفاده می‌شود.');
+        generateCompetencies();
+        displayResults();
+        switchTab(2);
+    }
+}
+
+        function generateCompetencies() {
+            let competencies = [];
+            
+            // اضافه کردن شایستگی‌های عمومی
+            competencies.push(...competencyDatabase.general);
+            
+            // اضافه کردن شایستگی‌های تخصصی صنعت
+            if (competencyDatabase[analysisData.industry]) {
+                competencies.push(...competencyDatabase[analysisData.industry]);
+            }
+            
+            // اضافه کردن شایستگی‌های مدیریتی برای سطوح بالا
+            if (analysisData.jobLevel === 'manager' || 
+                analysisData.jobLevel === 'director' || 
+                analysisData.jobLevel === 'supervisor') {
+                competencies.push({
+                    code: "IK-MGT-02",
+                    title: "مدیریت تغییر سازمانی",
+                    definition: "توانایی هدایت و مدیریت فرآیند تغییر در سازمان",
+                    category: "مدیریتی",
+                    source: "مدل مدیریت تغییر",
+                    risks: ["مقاومت در برابر تغییر", "شکست در اجرای تغییرات", "کاهش بهره‌وری موقت"]
+                });
+            }
+            
+            // محدود کردن تعداد شایستگی‌ها
+            analysisData.competencies = competencies.slice(0, 6);
+        }
+
+        function displayResults() {
+            // آپدیت آمارها
+            document.getElementById('statJobTitle').textContent = analysisData.jobTitle;
+            document.getElementById('statDuties').textContent = analysisData.duties.length;
+            document.getElementById('statCompetencies').textContent = analysisData.competencies.length;
+            
+            // محاسبه سطح ریسک
+            const totalRisks = analysisData.competencies.reduce((sum, comp) => sum + comp.risks.length, 0);
+            const riskLevel = totalRisks > 15 ? 'بالا' : totalRisks > 8 ? 'متوسط' : 'پایین';
+            document.getElementById('statRiskLevel').textContent = riskLevel;
+            
+            // نمایش وظایف
+            let dutiesHtml = '';
+            analysisData.duties.forEach((duty, index) => {
+                dutiesHtml += `
+                    <div class="duty-item">
+                        <span><strong>F${index + 1}:</strong> ${duty}</span>
+                        <span class="duty-code">کد: F${index + 1}</span>
+                    </div>
+                `;
+            });
+            document.getElementById('dutiesList').innerHTML = dutiesHtml;
+            
+            // نمایش شایستگی‌ها
+            let compHtml = '';
+            analysisData.competencies.forEach((comp, index) => {
+                compHtml += `
+                    <div class="competency-card">
+                        <div class="competency-header">
+                            <div class="competency-title">
+                                <i class="fas fa-graduation-cap"></i>
+                                ${comp.title}
+                            </div>
+                            <span class="competency-code">${comp.code}</span>
+                        </div>
+                        
+                        <p><strong><i class="fas fa-book"></i> تعریف:</strong> ${comp.definition}</p>
+                        
+                        <div style="margin: 15px 0;">
+                            <span class="badge badge-primary">
+                                <i class="fas fa-tag"></i> ${comp.category}
+                            </span>
+                            <span class="badge badge-primary">
+                                <i class="fas fa-source"></i> ${comp.source}
+                            </span>
+                        </div>
+                        
+                        <p><strong><i class="fas fa-exclamation-triangle"></i> ریسک‌های عدم احراز:</strong></p>
+                        <div style="margin: 10px 0;">
+                            ${comp.risks.map(risk => `<span class="badge badge-danger">${risk}</span>`).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            document.getElementById('competenciesContainer').innerHTML = compHtml;
+            
+            // پر کردن جدول سنجش کیفی
+            let tableHtml = '';
+            analysisData.competencies.forEach((comp, index) => {
+                const spectrumIndex = Math.min(index, assessmentSpectrum.length - 1);
+                tableHtml += `
+                    <tr>
+                        <td><strong>${comp.code}</strong></td>
+                        <td>${comp.title}</td>
+                        <td>
+                            <div class="assessment-level">${assessmentSpectrum[spectrumIndex]}</div>
+                            <div class="assessment-description">سطح مورد انتظار برای این شایستگی</div>
+                        </td>
+                    </tr>
+                `;
+            });
+            
+            document.getElementById('qualitativeTableBody').innerHTML = tableHtml;
+            
+            // نمایش container نتایج
+            document.getElementById('resultsContainer').style.display = 'block';
+        }
+
+        function manualAnalysis() {
+            alert('ویژگی تحلیل دستی در نسخه بعدی اضافه خواهد شد');
+        }
+
+        function clearForm() {
+            if (confirm('آیا مطمئن هستید که می‌خواهید تمام اطلاعات فرم را پاک کنید؟')) {
+                document.getElementById('jobTitle').value = '';
+                document.getElementById('department').value = '';
+                document.getElementById('duties').value = '';
+            }
+        }
+
+        function exportToExcel() {
+            try {
+                const wb = XLSX.utils.book_new();
+                
+                // شیت اطلاعات شغل
+                const jobData = [
+                    ['گزارش شایستگی‌های سازمانی - ایران خودرو خراسان'],
+                    ['تاریخ تولید', new Date().toLocaleDateString('fa-IR')],
+                    [''],
+                    ['عنوان شغل', analysisData.jobTitle],
+                    ['واحد سازمانی', analysisData.department],
+                    ['حوزه فعالیت', analysisData.industry],
+                    ['سطح شغل', analysisData.jobLevel],
+                    ['تعداد وظایف', analysisData.duties.length],
+                    ['تعداد شایستگی‌ها', analysisData.competencies.length]
+                ];
+                const ws1 = XLSX.utils.aoa_to_sheet(jobData);
+                XLSX.utils.book_append_sheet(wb, ws1, 'اطلاعات کلی');
+                
+                // شیت وظایف
+                const dutiesData = [['کد', 'شرح وظیفه']];
+                analysisData.duties.forEach((duty, index) => {
+                    dutiesData.push([`F${index + 1}`, duty]);
+                });
+                const ws2 = XLSX.utils.aoa_to_sheet(dutiesData);
+                XLSX.utils.book_append_sheet(wb, ws2, 'وظایف');
+                
+                // شیت شایستگی‌ها
+                const compData = [['کد', 'عنوان', 'تعریف', 'دسته‌بندی', 'منبع', 'ریسک‌ها']];
+                analysisData.competencies.forEach(comp => {
+                    compData.push([
+                        comp.code,
+                        comp.title,
+                        comp.definition,
+                        comp.category,
+                        comp.source,
+                        comp.risks.join(' | ')
+                    ]);
+                });
+                const ws3 = XLSX.utils.aoa_to_sheet(compData);
+                XLSX.utils.book_append_sheet(wb, ws3, 'شایستگی‌ها');
+                
+                // دانلود
+                const fileName = `ایران_خودرو_شایستگی_${analysisData.jobTitle}_${new Date().toISOString().slice(0,10)}.xlsx`;
+                XLSX.writeFile(wb, fileName);
+                
+                alert('فایل Excel با موفقیت ایجاد شد');
+            } catch (error) {
+                alert('خطا در ایجاد فایل Excel: ' + error.message);
+            }
+        }
+
+        function exportToPDF() {
+            alert('برای ایجاد PDF نیاز به نصب کتابخانه jsPDF دارید. فعلاً از گزینه Excel یا HTML استفاده کنید.');
+        }
+
+        function exportToHTML() {
+            const reportContent = document.getElementById('resultsContainer').innerHTML;
+            const header = document.querySelector('.header-section').innerHTML;
+            
+            const htmlContent = `
+                <!DOCTYPE html>
+                <html dir="rtl" lang="fa">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>گزارش شایستگی‌های ${analysisData.jobTitle}</title>
+                    <style>
+                        ${document.querySelector('style').textContent}
+                    </style>
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+                    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+                </head>
+                <body>
+                    <div class="main-container">
+                        ${header}
+                        <div class="tab-content active" style="display: block;">
+                            ${reportContent}
+                        </div>
+                    </div>
+                </body>
+                </html>
+            `;
+            
+            const blob = new Blob([htmlContent], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `گزارش_شایستگی_${analysisData.jobTitle}.html`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            alert('گزارش HTML با موفقیت ذخیره شد');
+        }
+
+        function printReport() {
+            const printContent = document.getElementById('resultsContainer').innerHTML;
+            const originalContent = document.body.innerHTML;
+            
+            document.body.innerHTML = `
+                <div dir="rtl" style="font-family: 'Vazirmatn', Tahoma; padding: 20px;">
+                    <div style="text-align: center; margin-bottom: 30px;">
+                        <h1 style="color: #0054a6;">ایران خودرو خراسان</h1>
+                        <h2 style="color: #2d3748;">گزارش شایستگی‌های سازمانی</h2>
+                        <h3 style="color: #0054a6;">${analysisData.jobTitle}</h3>
+                        <p><strong>واحد:</strong> ${analysisData.department}</p>
+                        <p><strong>تاریخ:</strong> ${new Date().toLocaleDateString('fa-IR')}</p>
+                    </div>
+                    <hr style="margin: 20px 0;">
+                    ${printContent}
+                </div>
+            `;
+            
+            window.print();
+            document.body.innerHTML = originalContent;
+            location.reload();
+        }
+
+        // نمایش نمونه داده‌ها در ابتدا
+        window.addEventListener('DOMContentLoaded', function() {
+            // نمونه داده‌های اولیه
+            document.getElementById('jobTitle').value = 'کارشناس آموزش';
+            document.getElementById('department').value = 'منابع انسانی';
+        });
+    </script>
+</body>
+</html>
