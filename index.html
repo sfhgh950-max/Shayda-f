@@ -7,13 +7,13 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>SHAYDA AI</title>
+<title>SHAYDA AI | سامانه هوشمند شایدا</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;800&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="css/style.css">
 
@@ -23,15 +23,17 @@
 
 <header class="header">
 
+<div class="container">
+
 <div class="brand">
 
-<img src="assets/logo/ikco.png" class="ikco-logo">
+<img src="assets/logo/ikk-logo.png" class="ikk-logo">
 
 <div>
 
 <h1>SHAYDA AI</h1>
 
-<p>سامانه هوشمند تحلیل شایستگی و جانشین‌پروری</p>
+<span>Smart Human Resource Intelligence</span>
 
 </div>
 
@@ -43,33 +45,47 @@
 
 <a href="#">تحلیل شغل</a>
 
-<a href="#">درباره</a>
+<a href="#">شایستگی‌ها</a>
+
+<a href="#">نقشه راه</a>
+
+<a href="#">ورود</a>
 
 </nav>
+
+</div>
 
 </header>
 
 <section class="hero">
 
-<div class="overlay">
+<div class="container hero-grid">
 
-<div class="glass">
+<div class="hero-text">
 
 <h2>
 
-هوشمندی در مسیر توسعه سرمایه انسانی
+سامانه هوشمند توسعه سرمایه انسانی
 
 </h2>
 
 <p>
 
-تحلیل شغل، استخراج شایستگی، پیشنهاد آموزش و جانشین‌پروری مبتنی بر هوش مصنوعی
+سامانه شایدا با استفاده از هوش مصنوعی، تحلیل شغل، استخراج KSA، پیشنهاد آموزش، مسیر شغلی و جانشین‌پروری را برای ایران خودرو خراسان انجام می‌دهد.
 
 </p>
 
-<button id="startBtn">
+<div class="hero-buttons">
+
+<button class="btn-primary">
 
 شروع تحلیل
+
+</button>
+
+<button class="btn-secondary">
+
+دموی سامانه
 
 </button>
 
@@ -77,65 +93,253 @@
 
 </div>
 
+<div class="hero-card">
+
+<div class="glass-card">
+
+<h3>
+
+نسخه 1.0
+
+</h3>
+
+<p>
+
+Artificial Intelligence Human Resource Platform
+
+</p>
+
+<div class="status">
+
+<span class="dot"></span>
+
+سامانه آماده اتصال به API
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section><section class="analysis">
+
+<div class="container">
+
+<div class="section-title">
+
+<h2>تحلیل هوشمند شغل</h2>
+
+<p>
+شرح شغل را وارد کنید تا سامانه SHAYDA AI با استفاده از هوش مصنوعی تحلیل اولیه را انجام دهد.
+</p>
+
+</div>
+
+<div class="analysis-box">
+
+<textarea id="jobText"
+placeholder="شرح شغل یا عنوان شغلی را اینجا وارد کنید..."></textarea>
+
+<div class="action-row">
+
+<button id="analyzeBtn" class="btn-primary">
+
+شروع تحلیل
+
+</button>
+
+<button class="btn-secondary">
+
+پاک کردن
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
 </section>
 
-<section class="services">
+
+
+<section class="results">
+
+<div class="container">
+
+<div class="section-title">
+
+<h2>نتیجه تحلیل</h2>
+
+<p>
+نمونه اولیه خروجی سامانه
+</p>
+
+</div>
+
+<div class="cards">
 
 <div class="card">
 
-<h3>تحلیل شغل</h3>
+<h3>شغل پیشنهادی</h3>
 
-<p>استخراج مفاهیم و مسئولیت‌های شغلی</p>
+<h1>Financial Specialist</h1>
+
+<span>92%</span>
 
 </div>
 
 <div class="card">
 
-<h3>تحلیل شایستگی</h3>
+<h3>سطح تطابق</h3>
 
-<p>مهارت‌ها، دانش و توانمندی‌های موردنیاز</p>
+<h1>Very High</h1>
 
-</div>
-
-<div class="card">
-
-<h3>پیشنهاد آموزش</h3>
-
-<p>دوره‌های آموزشی متناسب با شغل</p>
+<span>AI Match</span>
 
 </div>
 
 <div class="card">
 
-<h3>هوش مصنوعی</h3>
+<h3>شایستگی کلیدی</h3>
 
-<p>تحلیل پیشرفته مبتنی بر LLM</p>
+<h1>Critical Thinking</h1>
+
+<span>Top Skill</span>
+
+</div>
+
+</div>
 
 </div>
 
 </section>
 
-<footer>
 
-<div class="footer-left">
 
-<img src="assets/logo/mrsj.svg" class="mrsj">
+<section class="skills">
+
+<div class="container">
+
+<div class="section-title">
+
+<h2>مهارت‌های استخراج شده</h2>
 
 </div>
 
-<div class="footer-center">
+<div class="skill-grid">
+
+<div class="skill">Financial Analysis</div>
+
+<div class="skill">Critical Thinking</div>
+
+<div class="skill">Problem Solving</div>
+
+<div class="skill">Excel</div>
+
+<div class="skill">Power BI</div>
+
+<div class="skill">SQL</div>
+
+<div class="skill">Writing</div>
+
+<div class="skill">Communication</div>
+
+</div>
+
+</div>
+
+</section>
+<section class="roadmap">
+
+<div class="container">
+
+<div class="section-title">
+
+<h2>مسیر توسعه پیشنهادی</h2>
+
+<p>دوره‌های آموزشی پیشنهاد شده توسط SHAYDA AI</p>
+
+</div>
+
+<div class="roadmap-grid">
+
+<div class="road-item">
+<div class="number">01</div>
+<h3>اصول حسابداری</h3>
+<p>Accounting Fundamentals</p>
+</div>
+
+<div class="road-item">
+<div class="number">02</div>
+<h3>تحلیل مالی</h3>
+<p>Financial Analysis</p>
+</div>
+
+<div class="road-item">
+<div class="number">03</div>
+<h3>Power BI</h3>
+<p>Dashboard & Reporting</p>
+</div>
+
+<div class="road-item">
+<div class="number">04</div>
+<h3>هوش تجاری</h3>
+<p>Business Intelligence</p>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<footer class="footer">
+
+<div class="container">
+
+<div class="footer-logo">
+
+<img src="assets/logo/shayda-logo.png" class="shayda-logo">
+
+<h2>SHAYDA AI</h2>
+
+<p>
+
+Smart Human Resource Development Platform
+
+</p>
+
+</div>
+
+<div class="footer-copy">
+
+Designed & Engineered by
+
+<strong>
+
+Mr Sj
+
+</strong>
+
+</div>
+
+<div class="footer-version">
 
 Version 1.0
 
 </div>
 
-<div class="footer-right">
-
-Powered by Iran Khodro Khorasan
-
 </div>
 
 </footer>
+
+
 
 <script src="js/app.js"></script>
 
