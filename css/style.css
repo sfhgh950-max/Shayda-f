@@ -1,1 +1,648 @@
+/* ==========================================
+   SHAYDA AI
+   Version 1.0
+   UI Framework
+   ========================================== */
 
+@import url('https://cdn.jsdelivr.net/gh/rastikerdar/yekan-font@master/dist/font-face.css');
+
+:root{
+
+    --primary:#0058B0;
+    --primary-light:#1974d2;
+    --secondary:#00BCD4;
+    --accent:#F5A623;
+
+    --background:#F4F8FC;
+    --surface:#FFFFFF;
+
+    --text:#243447;
+    --text-light:#5F6E7A;
+
+    --border:#DDE8F2;
+
+    --shadow:
+        0 8px 25px rgba(0,0,0,.08);
+
+    --radius:22px;
+
+    --transition:.30s ease;
+
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+
+    scroll-behavior:smooth;
+
+}
+
+body{
+
+    font-family:Yekan,IRANYekan,Tahoma,sans-serif;
+
+    background:var(--background);
+
+    color:var(--text);
+
+    direction:rtl;
+
+    overflow-x:hidden;
+
+}
+
+
+/* ===========================
+        Header
+=========================== */
+
+header{
+
+    position:fixed;
+
+    top:0;
+
+    right:0;
+
+    width:100%;
+
+    height:82px;
+
+    background:rgba(255,255,255,.92);
+
+    backdrop-filter:blur(14px);
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:0 60px;
+
+    border-bottom:1px solid rgba(0,0,0,.05);
+
+    z-index:1000;
+
+}
+
+.logo-area{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+}
+
+.logo-area img{
+
+    width:58px;
+
+}
+
+.logo-title{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+.logo-title h2{
+
+    color:var(--primary);
+
+    font-size:25px;
+
+}
+
+.logo-title span{
+
+    color:var(--text-light);
+
+    font-size:13px;
+
+}
+
+
+/* ===========================
+        Hero
+=========================== */
+
+.hero{
+
+    margin-top:82px;
+
+    min-height:92vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:70px;
+
+}
+
+.hero-card{
+
+    width:100%;
+
+    max-width:1500px;
+
+    background:linear-gradient(
+        145deg,
+        rgba(255,255,255,.96),
+        rgba(255,255,255,.82)
+    );
+
+    border-radius:35px;
+
+    overflow:hidden;
+
+    box-shadow:var(--shadow);
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+}
+
+.hero-left{
+
+    padding:70px;
+
+}
+
+.hero-right{
+
+    background:linear-gradient(
+        135deg,
+        var(--primary),
+        var(--secondary)
+    );
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+
+.hero-right img{
+
+    width:78%;
+
+}
+
+.badge{
+
+    display:inline-block;
+
+    background:rgba(245,166,35,.12);
+
+    color:var(--accent);
+
+    padding:10px 20px;
+
+    border-radius:50px;
+
+    font-size:14px;
+
+    font-weight:bold;
+
+    margin-bottom:28px;
+
+}
+
+.hero h1{
+
+    font-size:52px;
+
+    color:var(--primary);
+
+    margin-bottom:18px;
+
+}
+
+.hero p{
+
+    color:var(--text-light);
+
+    line-height:2;
+
+    font-size:18px;
+
+    margin-bottom:35px;
+
+}
+
+
+/* ===========================
+        Buttons
+=========================== */
+
+.btn{
+
+    padding:15px 35px;
+
+    border:none;
+
+    border-radius:50px;
+
+    cursor:pointer;
+
+    transition:var(--transition);
+
+    font-family:inherit;
+
+    font-size:16px;
+
+}
+
+.btn-primary{
+
+    background:linear-gradient(
+        135deg,
+        var(--primary),
+        var(--primary-light)
+    );
+
+    color:#fff;
+
+}
+
+.btn-primary:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:
+        0 14px 25px rgba(0,88,176,.28);
+
+}
+
+.btn-secondary{
+
+    background:#fff;
+
+    color:var(--primary);
+
+    border:2px solid var(--primary);
+
+    margin-right:12px;
+
+}
+
+.btn-secondary:hover{
+
+    background:var(--primary);
+
+    color:#fff;
+
+}
+/* ===============================
+            Search Panel
+================================ */
+
+.search-section{
+
+    padding:70px;
+
+}
+
+.search-box{
+
+    background:#fff;
+
+    border-radius:28px;
+
+    padding:35px;
+
+    box-shadow:var(--shadow);
+
+    border:1px solid var(--border);
+
+}
+
+.section-title{
+
+    font-size:30px;
+
+    color:var(--primary);
+
+    margin-bottom:25px;
+
+}
+
+textarea{
+
+    width:100%;
+
+    min-height:220px;
+
+    resize:none;
+
+    border:none;
+
+    outline:none;
+
+    padding:22px;
+
+    border-radius:18px;
+
+    background:#F7FAFD;
+
+    font-family:inherit;
+
+    font-size:16px;
+
+    line-height:2;
+
+    color:var(--text);
+
+    transition:.25s;
+
+}
+
+textarea:focus{
+
+    background:#fff;
+
+    box-shadow:0 0 0 3px rgba(0,88,176,.15);
+
+}
+
+.action-area{
+
+    margin-top:30px;
+
+    display:flex;
+
+    justify-content:flex-end;
+
+}
+
+/* ===============================
+            Cards
+================================ */
+
+.cards{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:25px;
+
+    margin-top:45px;
+
+}
+
+.card{
+
+    background:#fff;
+
+    border-radius:22px;
+
+    padding:30px;
+
+    box-shadow:var(--shadow);
+
+    transition:.35s;
+
+    border:1px solid transparent;
+
+}
+
+.card:hover{
+
+    transform:translateY(-8px);
+
+    border-color:rgba(0,88,176,.15);
+
+}
+
+.card h3{
+
+    color:var(--primary);
+
+    margin-bottom:18px;
+
+    font-size:22px;
+
+}
+
+.card p{
+
+    color:var(--text-light);
+
+    line-height:2;
+
+}
+
+.card-icon{
+
+    width:62px;
+
+    height:62px;
+
+    border-radius:18px;
+
+    background:linear-gradient(
+        135deg,
+        var(--primary),
+        var(--secondary)
+    );
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    color:white;
+
+    font-size:24px;
+
+    margin-bottom:20px;
+
+}
+
+/* ===============================
+            Dashboard
+================================ */
+
+.dashboard{
+
+    padding:70px;
+
+}
+
+.result-panel{
+
+    background:white;
+
+    border-radius:30px;
+
+    padding:40px;
+
+    box-shadow:var(--shadow);
+
+}
+
+.grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:35px;
+
+    margin-top:35px;
+
+}
+
+.widget{
+
+    background:#F8FBFE;
+
+    border-radius:20px;
+
+    padding:25px;
+
+}
+
+.widget h4{
+
+    color:var(--primary);
+
+    margin-bottom:20px;
+
+}
+
+.widget ul{
+
+    list-style:none;
+
+}
+
+.widget li{
+
+    padding:10px 0;
+
+    color:var(--text);
+
+    border-bottom:1px dashed rgba(0,0,0,.08);
+
+}
+
+/* ===============================
+            AI Report
+================================ */
+
+.report{
+
+    margin-top:40px;
+
+    background:linear-gradient(
+        135deg,
+        rgba(0,88,176,.05),
+        rgba(0,188,212,.05)
+    );
+
+    border-radius:25px;
+
+    padding:35px;
+
+    line-height:2.3;
+
+    color:var(--text);
+
+}
+
+/* ===============================
+            Footer
+================================ */
+
+footer{
+
+    margin-top:80px;
+
+    background:#0F2E53;
+
+    color:white;
+
+    padding:60px 40px;
+
+}
+
+.footer-content{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    flex-wrap:wrap;
+
+}
+
+.footer-left{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+
+}
+
+.footer-left img{
+
+    width:70px;
+
+}
+
+.footer-right{
+
+    text-align:left;
+
+}
+
+.footer-right h3{
+
+    font-size:24px;
+
+    margin-bottom:10px;
+
+}
+
+.footer-right span{
+
+    color:#C7D3DF;
+
+}
+
+.signature{
+
+    margin-top:40px;
+
+    text-align:center;
+
+    color:#9CB7D5;
+
+    font-size:14px;
+
+    letter-spacing:2px;
+
+}
