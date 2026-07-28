@@ -1,9 +1,8 @@
-/* =============
 /* ==========================================
    SHAYDA
-   Version 1.0
+   Version 1.1
    Smart Human Resource Platform
-
+   (Connected to Backend AI Analysis API)
 
    Designed & Engineered by Mr Sj
 ========================================== */
@@ -159,6 +158,23 @@ const analysisExplanation =
 
 
 /* ==========================================
+        API CONFIG
+        (از js/config.js خوانده می‌شود)
+========================================== */
+
+
+const API_BASE_URL =
+    (window.SHAYDA_CONFIG &&
+        window.SHAYDA_CONFIG.API_BASE_URL) ||
+    "";
+
+
+const ANALYZE_ENDPOINT =
+    `${API_BASE_URL}/api/analyze`;
+
+
+
+/* ==========================================
         INITIAL STATE
 ========================================== */
 
@@ -224,7 +240,7 @@ if (clearBtn) {
 ========================================== */
 
 
-function analyzeJob() {
+async function analyzeJob() {
 
 
     const postTitle =
@@ -307,11 +323,11 @@ function analyzeJob() {
 
 
 
-    if (!jobText) {
+    if (!jobText || jobText.length < 40) {
 
 
         showMessage(
-            "لطفاً شرح شغل را وارد نمایید."
+            "لطفاً شرح شغل را با جزئیات کافی وارد نمایید (حداقل ۴۰ کاراکتر)."
         );
 
 
@@ -334,51 +350,55 @@ function analyzeJob() {
 
 
 
-    /*
-        فعلاً برای تست رابط کاربری
-        یک تأخیر کوتاه شبیه‌سازی می‌کنیم.
+    /* ======================================
+            CALL BACKEND API
+    ====================================== */
 
 
-        در مرحله بعد این قسمت به API
-        تحلیل هوشمند متصل خواهد شد.
-    */
-
-
-    setTimeout(() => {
+    try {
 
 
         const analysis =
-            generateDemoAnalysis({
+            await fetchAnalysisFromApi({
 
+                jobTitle: postTitle,
 
-                postTitle,
+                jobCode: postCode,
 
-
-                postCode,
-
-
-                postLevel,
-
+                jobLevel: postLevel,
 
                 organizationalUnit,
 
-
-                jobText
-
+                jobDescription: jobText
 
             });
-
 
 
         renderResults(analysis);
 
 
+    } catch (error) {
+
+
+        console.error(
+            "[SHAYDA] خطا در دریافت تحلیل:",
+            error
+        );
+
+
+        showMessage(
+            error.message ||
+            "خطا در ارتباط با سرور تحلیل هوشمند. لطفاً دوباره تلاش کنید."
+        );
+
+
+    } finally {
+
 
         setLoadingState(false);
 
 
-
-    }, 1200);
+    }
 
 
 }
@@ -386,414 +406,75 @@ function analyzeJob() {
 
 
 /* ==========================================
-        DEMO ANALYSIS ENGINE
+        FETCH ANALYSIS FROM BACKEND API
 ========================================== */
 
 
-function generateDemoAnalysis(data) {
+async function fetchAnalysisFromApi(payload) {
 
 
-    const {
+    let response;
 
 
-        postTitle,
+    try {
 
 
-        postCode,
+        response = await fetch(
+            ANALYZE_ENDPOINT,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            }
+        );
 
 
-        postLevel,
+    } catch (networkError) {
 
 
-        organizationalUnit,
+        throw new Error(
+            "امکان اتصال به سرور تحلیل وجود ندارد. اتصال اینترنت یا آدرس API را بررسی نمایید."
+        );
 
 
-        jobText
+    }
 
 
-    } = data;
+    let data;
 
 
+    try {
 
-    /*
-        این مقادیر موقت هستند.
 
+        data = await response.json();
 
-        در نسخه API واقعی،
-        این بخش با تحلیل واقعی
-        جایگزین خواهد شد.
-    */
 
+    } catch (parseError) {
 
 
-    const competencies = [
+        throw new Error(
+            "پاسخ سرور قابل پردازش نبود."
+        );
 
 
-        {
-            name:
-                "تفکر تحلیلی",
+    }
 
 
-            definition:
-                "توانایی تجزیه و تحلیل اطلاعات، شناسایی روابط میان داده‌ها و استفاده از شواهد برای تصمیم‌گیری.",
+    if (!response.ok || !data.success) {
 
 
-            required: 5,
+        throw new Error(
+            (data && data.error) ||
+            "سرور تحلیل هوشمند قادر به پردازش درخواست نبود."
+        );
 
 
-            current: 4,
+    }
 
 
-            gap: 1
-        },
-
-
-        {
-            name:
-                "حل مسئله",
-
-
-            definition:
-                "توانایی شناسایی مسائل، بررسی علل و ارائه راهکارهای مؤثر و عملی.",
-
-
-            required: 5,
-
-
-            current: 4,
-
-
-            gap: 1
-        },
-
-
-        {
-            name:
-                "تصمیم‌گیری",
-
-
-            definition:
-                "توانایی ارزیابی گزینه‌ها و انتخاب بهترین راهکار با توجه به اهداف و محدودیت‌های موجود.",
-
-
-            required: 4,
-
-
-            current: 4,
-
-
-            gap: 0
-        },
-
-
-        {
-            name:
-                "برنامه‌ریزی و سازماندهی",
-
-
-            definition:
-                "توانایی تعیین اولویت‌ها، تنظیم فعالیت‌ها و مدیریت منابع برای دستیابی به اهداف.",
-
-
-            required: 5,
-
-
-            current: 4,
-
-
-            gap: 1
-        },
-
-
-        {
-            name:
-                "ارتباط مؤثر",
-
-
-            definition:
-                "توانایی انتقال شفاف اطلاعات و برقراری ارتباط سازنده با افراد و گروه‌های مختلف.",
-
-
-            required: 4,
-
-
-            current: 4,
-
-
-            gap: 0
-        },
-
-
-        {
-            name:
-                "کار تیمی",
-
-
-            definition:
-                "توانایی همکاری مؤثر با دیگران برای دستیابی به اهداف مشترک سازمانی.",
-
-
-            required: 4,
-
-
-            current: 4,
-
-
-            gap: 0
-        },
-
-
-        {
-            name:
-                "مسئولیت‌پذیری",
-
-
-            definition:
-                "تعهد به انجام مسئولیت‌ها، پاسخگویی نسبت به نتایج و رعایت الزامات سازمانی.",
-
-
-            required: 5,
-
-
-            current: 5,
-
-
-            gap: 0
-        },
-
-
-        {
-            name:
-                "یادگیری و توسعه",
-
-
-            definition:
-                "توانایی یادگیری مستمر، پذیرش بازخورد و توسعه دانش و مهارت‌های حرفه‌ای.",
-
-
-            required: 4,
-
-
-            current: 3,
-
-
-            gap: 1
-        },
-
-
-        {
-            name:
-                "تمرکز بر نتیجه",
-
-
-            definition:
-                "توانایی تمرکز بر اهداف و دستیابی به نتایج مورد انتظار با استفاده مؤثر از منابع.",
-
-
-            required: 5,
-
-
-            current: 4,
-
-
-            gap: 1
-        },
-
-
-        {
-            name:
-                "انطباق‌پذیری",
-
-
-            definition:
-                "توانایی سازگاری با تغییرات، شرایط جدید و الزامات متغیر محیط کار.",
-
-
-            required: 4,
-
-
-            current: 3,
-
-
-            gap: 1
-        }
-
-
-    ];
-
-
-
-    return {
-
-
-        postTitle,
-
-
-        postCode:
-            postCode || "ثبت نشده",
-
-
-        postLevel,
-
-
-        organizationalUnit,
-
-
-        jobSummary:
-
-
-            `بر اساس اطلاعات واردشده، پست «${postTitle}» در سطح «${postLevel}» و در واحد «${organizationalUnit}» نیازمند مجموعه‌ای از شایستگی‌های تحلیلی، تخصصی، رفتاری و مدیریتی است. شرح شغل واردشده برای تحلیل عمیق‌تر در موتور هوشمند سامانه استفاده خواهد شد.`,
-
-
-        shaydaScore: 84,
-
-
-        matchScore: 86,
-
-
-        riskScore: 14,
-
-
-        riskLevel:
-            "ریسک پایین",
-
-
-        riskExplanation:
-
-
-            "بر اساس ارزیابی اولیه، ریسک عدم احراز پست پایین برآورد می‌شود. با این حال، وجود شکاف در برخی شایستگی‌ها مانند یادگیری و توسعه، انطباق‌پذیری و تفکر تحلیلی می‌تواند در صورت عدم توسعه فرد، بر عملکرد آینده اثرگذار باشد.",
-
-
-        competencies,
-
-
-        technicalSkills: [
-
-
-            "تحلیل اطلاعات مرتبط با شغل",
-
-
-            "آشنایی با فرآیندهای تخصصی واحد",
-
-
-            "توانایی تحلیل و گزارش‌دهی",
-
-
-            "کار با ابزارهای مرتبط با حوزه شغلی"
-
-
-        ],
-
-
-        behavioralSkills: [
-
-
-            "تفکر تحلیلی",
-
-
-            "حل مسئله",
-
-
-            "تصمیم‌گیری",
-
-
-            "ارتباط مؤثر",
-
-
-            "کار تیمی"
-
-
-        ],
-
-
-        softwareSkills: [
-
-
-            "Microsoft Excel",
-
-
-            "Microsoft Word",
-
-
-            "ابزارهای گزارش‌دهی و تحلیل داده"
-
-
-        ],
-
-
-        strengths: [
-
-
-            "مسئولیت‌پذیری",
-
-
-            "تصمیم‌گیری",
-
-
-            "کار تیمی",
-
-
-            "تمرکز بر نتیجه"
-
-
-        ],
-
-
-        developmentRoadmap:
-
-
-            "توسعه مهارت‌های تحلیلی → تقویت مهارت‌های تخصصی → توسعه توانایی تصمیم‌گیری → آمادگی برای پذیرش مسئولیت‌های سطح بالاتر",
-
-
-        trainingCourses: [
-
-
-            "تفکر تحلیلی و حل مسئله",
-
-
-            "تصمیم‌گیری مبتنی بر داده",
-
-
-            "مهارت‌های تخصصی مرتبط با پست",
-
-
-            "مدیریت عملکرد و هدف‌گذاری"
-
-
-        ],
-
-
-        improvementAreas: [
-
-
-            "تقویت تفکر تحلیلی",
-
-
-            "افزایش توانایی یادگیری و توسعه",
-
-
-            "تقویت انطباق‌پذیری",
-
-
-            "توسعه مهارت‌های تخصصی مرتبط با پست"
-
-
-        ],
-
-
-        managementRecommendation:
-
-
-            "پست موردنظر از نظر ساختار شایستگی قابلیت احراز دارد. پیشنهاد می‌شود پیش از تصمیم نهایی، سطح واقعی شایستگی‌های فرد با استفاده از ارزیابی‌های معتبر سازمانی بررسی شده و برای شکاف‌های شناسایی‌شده برنامه توسعه فردی تدوین شود.",
-
-
-        analysisExplanation:
-
-
-            "امتیاز SHAYDA Score و درصد تطابق بر اساس ترکیب اولیه شایستگی‌ها، سطح پست و اطلاعات شرح شغل در این نسخه آزمایشی تولید شده‌اند. در نسخه متصل به سرویس تحلیل هوشمند، این نتایج به‌صورت پویا از اطلاعات واقعی پست و مدل تحلیل تولید خواهند شد."
-
-
-    };
+    return data.analysis;
 
 
 }
@@ -955,21 +636,17 @@ function renderResults(data) {
         "block";
 
 
-
     resultsSection.classList.remove(
         "zoom"
     );
 
 
-
     void resultsSection.offsetWidth;
-
 
 
     resultsSection.classList.add(
         "zoom"
     );
-
 
 
     setTimeout(() => {
@@ -1019,7 +696,6 @@ function renderCompetencies(
                 document.createElement(
                     "tr"
                 );
-
 
 
             row.innerHTML = `
@@ -1091,7 +767,7 @@ function renderList(
 
 
 
-    items.forEach(
+    (items || []).forEach(
         item => {
 
 
@@ -1339,3 +1015,4 @@ if (downloadPdfBtn) {
 /* ==========================================
         END
 ========================================== */
+
