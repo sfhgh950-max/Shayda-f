@@ -3,11 +3,19 @@
    SHAYDA
    Version 1.0
    Smart Human Resource Platform
+
+
    Designed & Engineered by Mr Sj
 ========================================== */
 
 
-@import url('https://cdn.jsdelivr.net/gh/rastikerdar/yekan-font@master/dist/font-face.css');
+
+/* ==========================================
+            FONT
+========================================== */
+
+
+@import url('https://fonts.googleapis.com/css2?family=Yekan+Bakh:wght@300;400;500;600;700;800;900&display=swap');
 
 
 
@@ -17,6 +25,13 @@
 
 
 :root{
+
+
+    --font-family:
+        'Yekan Bakh',
+        Tahoma,
+        Arial,
+        sans-serif;
 
 
     --primary:#0058B0;
@@ -108,11 +123,10 @@ body{
 
 
     font-family:
-        Yekan,
-        IRANYekan,
-        Tahoma,
-        Arial,
-        sans-serif;
+        var(--font-family);
+
+
+    font-weight:400;
 
 
     background:var(--background);
@@ -140,7 +154,8 @@ select,
 textarea{
 
 
-    font-family:inherit;
+    font-family:
+        var(--font-family);
 
 
 }
@@ -307,6 +322,9 @@ header{
 
 
     font-size:12px;
+
+
+    font-weight:400;
 
 
     line-height:1.7;
@@ -537,7 +555,7 @@ header{
     font-size:14px;
 
 
-    font-weight:bold;
+    font-weight:600;
 
 
     margin-bottom:28px;
@@ -579,6 +597,9 @@ header{
 
 
     font-size:18px;
+
+
+    font-weight:400;
 
 
     margin-bottom:35px;
@@ -627,7 +648,8 @@ header{
     transition:var(--transition);
 
 
-    font-family:inherit;
+    font-family:
+        var(--font-family);
 
 
     font-size:16px;
@@ -795,6 +817,9 @@ header{
     font-size:15px;
 
 
+    font-weight:400;
+
+
     line-height:2;
 
 
@@ -832,7 +857,7 @@ header{
     font-size:15px;
 
 
-    font-weight:700;
+    font-weight:600;
 
 
     margin-bottom:10px;
@@ -888,10 +913,14 @@ header{
     color:var(--text);
 
 
-    font-family:inherit;
+    font-family:
+        var(--font-family);
 
 
     font-size:15px;
+
+
+    font-weight:400;
 
 
     transition:var(--transition);
@@ -905,6 +934,9 @@ header{
 
 
     color:#9AA8B5;
+
+
+    font-weight:300;
 
 
 }
@@ -971,10 +1003,14 @@ textarea{
         var(--surface-soft);
 
 
-    font-family:inherit;
+    font-family:
+        var(--font-family);
 
 
     font-size:16px;
+
+
+    font-weight:400;
 
 
     line-height:2;
@@ -994,6 +1030,9 @@ textarea::placeholder{
 
 
     color:#9AA8B5;
+
+
+    font-weight:300;
 
 
 }
@@ -1192,6 +1231,9 @@ textarea:focus{
     font-size:14px;
 
 
+    font-weight:400;
+
+
 }
 
 
@@ -1335,7 +1377,7 @@ textarea:focus{
     margin-bottom:20px;
 
 
-    font-weight:800;
+    font-weight:700;
 
 
 }
@@ -1349,6 +1391,9 @@ textarea:focus{
 
 
     line-height:2.2;
+
+
+    font-weight:400;
 
 
 }
@@ -1378,6 +1423,9 @@ textarea:focus{
     border-bottom:
         1px dashed
         rgba(0,0,0,0.08);
+
+
+    font-weight:400;
 
 
 }
@@ -1501,6 +1549,9 @@ textarea:focus{
     font-size:14px;
 
 
+    font-weight:400;
+
+
     line-height:1.9;
 
 
@@ -1577,6 +1628,9 @@ textarea:focus{
     color:var(--text);
 
 
+    font-weight:400;
+
+
 }
 
 
@@ -1591,6 +1645,9 @@ textarea:focus{
 
 
     margin-bottom:15px;
+
+
+    font-weight:700;
 
 
 }
@@ -1618,6 +1675,9 @@ textarea:focus{
 
 
     line-height:2;
+
+
+    font-weight:400;
 
 
 }
@@ -1719,6 +1779,9 @@ footer{
     margin-bottom:6px;
 
 
+    font-weight:800;
+
+
 }
 
 
@@ -1730,6 +1793,9 @@ footer{
 
 
     font-size:13px;
+
+
+    font-weight:400;
 
 
 }
@@ -1755,6 +1821,9 @@ footer{
     margin-bottom:6px;
 
 
+    font-weight:700;
+
+
 }
 
 
@@ -1766,6 +1835,9 @@ footer{
 
 
     font-size:13px;
+
+
+    font-weight:400;
 
 
 }
@@ -1795,6 +1867,9 @@ footer{
     font-size:13px;
 
 
+    font-weight:400;
+
+
     letter-spacing:1px;
 
 
@@ -1809,6 +1884,9 @@ footer{
 
 
     font-size:15px;
+
+
+    font-weight:700;
 
 
 }
@@ -2596,6 +2674,8 @@ footer{
 /* ==========================================
             END
 ========================================== */
+
+
 
 
 
