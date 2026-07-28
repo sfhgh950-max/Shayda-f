@@ -1,33 +1,18 @@
-const SHAYDA = {
+/* ==========================================
+   SHAYDA — Frontend Config
+   Version 1.1
 
-    APP_NAME: "SHAYDA AI",
+   چون بک‌اند (functions/api/analyze.js) و فرانت‌اند
+   هر دو روی یک دامنه‌ی Cloudflare Pages اجرا می‌شوند،
+   نیازی به آدرس کامل نیست و مسیر نسبی کافی است.
 
-    VERSION: "1.0",
+   اگر بعداً بک‌اند را روی دامنه‌ی جدا میزبانی کردی،
+   فقط همین یک خط را با آدرس کامل جایگزین کن، مثلاً:
+   API_BASE_URL: "https://your-project.pages.dev"
+========================================== */
 
-    COMPANY: "Iran Khodro Khorasan",
-
-    DESIGNER: "Mr Sj",
-
+window.SHAYDA_CONFIG = {
     API_BASE_URL: "",
-
-    MODEL: "",
-
-    LANGUAGE: "fa",
-
-    MAX_COMPETENCIES: 10,
-
-    THEME: {
-
-        PRIMARY: "#003B7A",
-
-        SECONDARY: "#F7941D",
-
-        SUCCESS: "#00A651",
-
-        DANGER: "#D32F2F",
-
-        LIGHT: "#F5F7FA"
-
-    }
-
 };
+
+
