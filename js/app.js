@@ -170,7 +170,7 @@ const API_BASE_URL =
 
 
 const ANALYZE_ENDPOINT =
-    `${API_BASE_URL}/api/analyze`;
+    const ANALYZE_ENDPOINT = /.netlify/functions/analyze;
 
 
 
