@@ -1,348 +1,1430 @@
+<
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 
+
 <head>
 
-<meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
 
-<title>SHAYDA AI | سامانه هوشمند شایدا</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <meta name="description"
+          content="سامانه هوشمند تحلیل شایستگی و توسعه کارکنان">
 
-<link rel="stylesheet" href="css/style.css">
+
+    <title>SHAYDA | سامانه هوشمند تحلیل شایستگی و توسعه کارکنان</title>
+
+
+    <link rel="stylesheet" href="css/style.css">
+
 
 </head>
 
+
+
 <body>
 
-<header class="header">
 
-<div class="container">
 
-<div class="brand">
+<!-- ==========================================
+                HEADER
+========================================== -->
 
-<img src="assets/logo/ikk-logo.png" class="ikk-logo">
 
-<div>
+<header>
 
-<h1>SHAYDA AI</h1>
 
-<span>Smart Human Resource Intelligence</span>
+    <div class="logo-area">
 
-</div>
 
-</div>
+        <img
+            src="assets/logo/ikk-logo.png"
+            alt="لوگوی ایران خودرو خراسان"
+        >
 
-<nav>
 
-<a href="#">خانه</a>
+        <div class="logo-title">
 
-<a href="#">تحلیل شغل</a>
 
-<a href="#">شایستگی‌ها</a>
+            <h2>SHAYDA</h2>
 
-<a href="#">نقشه راه</a>
 
-<a href="#">ورود</a>
+            <span>
+                سامانه هوشمند تحلیل شایستگی و توسعه کارکنان
+            </span>
 
-</nav>
 
-</div>
+        </div>
+
+
+    </div>
+
 
 </header>
 
+
+
+
+<!-- ==========================================
+                HERO
+========================================== -->
+
+
 <section class="hero">
 
-<div class="container hero-grid">
 
-<div class="hero-text">
+    <div class="hero-card">
 
-<h2>
 
-سامانه هوشمند توسعه سرمایه انسانی
 
-</h2>
+        <!-- HERO CONTENT -->
 
-<p>
 
-سامانه شایدا با استفاده از هوش مصنوعی، تحلیل شغل، استخراج KSA، پیشنهاد آموزش، مسیر شغلی و جانشین‌پروری را برای ایران خودرو خراسان انجام می‌دهد.
+        <div class="hero-left fade-right">
 
-</p>
 
-<div class="hero-buttons">
+            <span class="badge">
+                سامانه هوشمند سرمایه انسانی
+            </span>
 
-<button class="btn-primary">
 
-شروع تحلیل
 
-</button>
+            <h1>
+                تحلیل شایستگی و توسعه کارکنان
+            </h1>
 
-<button class="btn-secondary">
 
-دموی سامانه
 
-</button>
+            <p>
 
-</div>
 
-</div>
+                سامانه شایدا با تحلیل هوشمند اطلاعات شغلی،
+                شرح شغل و سطح پست، تصویری جامع از شایستگی‌های
+                موردنیاز، مهارت‌ها، شکاف‌های شغلی و مسیر توسعه
+                کارکنان ارائه می‌دهد.
 
-<div class="hero-card">
 
-<div class="glass-card">
+            </p>
 
-<h3>
 
-نسخه 1.0
 
-</h3>
+            <a
+                href="#job-analysis"
+                class="btn btn-primary"
+            >
 
-<p>
 
-Artificial Intelligence Human Resource Platform
+                شروع تحلیل هوشمند
 
-</p>
 
-<div class="status">
+            </a>
 
-<span class="dot"></span>
 
-سامانه آماده اتصال به API
+        </div>
 
-</div>
 
-</div>
 
-</div>
 
-</div>
+        <!-- HERO VISUAL -->
 
-</section><section class="analysis">
 
-<div class="container">
+        <div class="hero-right fade-left">
 
-<div class="section-title">
 
-<h2>تحلیل هوشمند شغل</h2>
+            <img
+                src="assets/logo/ikk-logo.png"
+                alt="ایران خودرو خراسان"
+            >
 
-<p>
-شرح شغل را وارد کنید تا سامانه SHAYDA AI با استفاده از هوش مصنوعی تحلیل اولیه را انجام دهد.
-</p>
 
-</div>
+        </div>
 
-<div class="analysis-box">
 
-<textarea id="jobText"
-placeholder="شرح شغل یا عنوان شغلی را اینجا وارد کنید..."></textarea>
 
-<div class="action-row">
+    </div>
 
-<button id="analyzeBtn" class="btn-primary">
-
-شروع تحلیل
-
-</button>
-
-<button class="btn-secondary">
-
-پاک کردن
-
-</button>
-
-</div>
-
-</div>
-
-</div>
 
 </section>
 
 
 
-<section class="results">
 
-<div class="container">
+<!-- ==========================================
+            JOB ANALYSIS SECTION
+========================================== -->
 
-<div class="section-title">
 
-<h2>نتیجه تحلیل</h2>
+<section
+    id="job-analysis"
+    class="search-section"
+>
 
-<p>
-نمونه اولیه خروجی سامانه
-</p>
 
-</div>
 
-<div class="cards">
+    <div class="search-box">
 
-<div class="card">
 
-<h3>شغل پیشنهادی</h3>
 
-<h1>Financial Specialist</h1>
+        <h2 class="section-title">
 
-<span>92%</span>
 
-</div>
+            اطلاعات پست سازمانی
 
-<div class="card">
 
-<h3>سطح تطابق</h3>
+        </h2>
 
-<h1>Very High</h1>
 
-<span>AI Match</span>
 
-</div>
+        <p class="section-description">
 
-<div class="card">
 
-<h3>شایستگی کلیدی</h3>
+            اطلاعات پست و شرح شغل را وارد نمایید تا سامانه
+            تحلیل هوشمند خود را بر اساس اطلاعات واردشده انجام دهد.
 
-<h1>Critical Thinking</h1>
 
-<span>Top Skill</span>
+        </p>
 
-</div>
 
-</div>
 
-</div>
+
+        <!-- ==================================
+                POST TITLE
+        =================================== -->
+
+
+        <div class="form-group">
+
+
+            <label for="postTitle">
+
+
+                عنوان پست
+
+
+            </label>
+
+
+            <input
+                type="text"
+                id="postTitle"
+                name="postTitle"
+                class="form-input"
+                placeholder="مثال: کارشناس برنامه‌ریزی تولید"
+                autocomplete="off"
+            >
+
+
+        </div>
+
+
+
+
+        <!-- ==================================
+                POST CODE
+        =================================== -->
+
+
+        <div class="form-group">
+
+
+            <label for="postCode">
+
+
+                کد شغل / کد پست
+
+
+                <span class="optional">
+                    (اختیاری)
+                </span>
+
+
+            </label>
+
+
+            <input
+                type="text"
+                id="postCode"
+                name="postCode"
+                class="form-input"
+                placeholder="در صورت وجود، کد شغل یا پست را وارد نمایید"
+                autocomplete="off"
+            >
+
+
+        </div>
+
+
+
+
+        <!-- ==================================
+                POST LEVEL
+        =================================== -->
+
+
+        <div class="form-group">
+
+
+            <label for="postLevel">
+
+
+                سطح پست
+
+
+            </label>
+
+
+
+            <select
+                id="postLevel"
+                name="postLevel"
+                class="form-input"
+            >
+
+
+                <option value="">
+
+
+                    انتخاب سطح پست
+
+
+                </option>
+
+
+                <option value="متصدی">
+
+
+                    متصدی
+
+
+                </option>
+
+
+                <option value="کاردان">
+
+
+                    کاردان
+
+
+                </option>
+
+
+                <option value="کارشناس">
+
+
+                    کارشناس
+
+
+                </option>
+
+
+                <option value="مسئول قسمت">
+
+
+                    مسئول قسمت
+
+
+                </option>
+
+
+                <option value="مسئول بخش">
+
+
+                    مسئول بخش
+
+
+                </option>
+
+
+                <option value="مدیر">
+
+
+                    مدیر
+
+
+                </option>
+
+
+            </select>
+
+
+        </div>
+
+
+
+
+        <!-- ==================================
+                ORGANIZATIONAL UNIT
+        =================================== -->
+
+
+        <div class="form-group">
+
+
+            <label for="organizationalUnit">
+
+
+                واحد سازمانی
+
+
+            </label>
+
+
+
+            <select
+                id="organizationalUnit"
+                name="organizationalUnit"
+                class="form-input"
+            >
+
+
+                <option value="">
+
+
+                    انتخاب واحد سازمانی
+
+
+                </option>
+
+
+                <option value="منابع انسانی">
+
+
+                    منابع انسانی
+
+
+                </option>
+
+
+                <option value="تولید">
+
+
+                    تولید
+
+
+                </option>
+
+
+                <option value="کیفیت">
+
+
+                    کیفیت
+
+
+                </option>
+
+
+                <option value="برنامه‌ریزی">
+
+
+                    برنامه‌ریزی
+
+
+                </option>
+
+
+                <option value="تدارکات">
+
+
+                    تدارکات
+
+
+                </option>
+
+
+                <option value="نگهداری و تعمیرات">
+
+
+                    نگهداری و تعمیرات
+
+
+                </option>
+
+
+                <option value="فناوری اطلاعات">
+
+
+                    فناوری اطلاعات
+
+
+                </option>
+
+
+                <option value="مالی">
+
+
+                    مالی
+
+
+                </option>
+
+
+                <option value="سایر">
+
+
+                    سایر
+
+
+                </option>
+
+
+            </select>
+
+
+        </div>
+
+
+
+
+        <!-- ==================================
+                JOB DESCRIPTION
+        =================================== -->
+
+
+        <div class="form-group">
+
+
+            <label for="jobText">
+
+
+                شرح شغل
+
+
+            </label>
+
+
+
+            <textarea
+                id="jobText"
+                name="jobText"
+                placeholder="شرح وظایف، مسئولیت‌ها، اختیارات، شرایط احراز و سایر اطلاعات مرتبط با پست را وارد نمایید..."
+            ></textarea>
+
+
+        </div>
+
+
+
+
+        <!-- ==================================
+                ACTIONS
+        =================================== -->
+
+
+        <div class="action-area">
+
+
+            <button
+                type="button"
+                id="analyzeBtn"
+                class="btn btn-primary"
+            >
+
+
+                تحلیل هوشمند شغل
+
+
+            </button>
+
+
+
+            <button
+                type="button"
+                id="clearBtn"
+                class="btn btn-secondary"
+            >
+
+
+                پاک کردن
+
+
+            </button>
+
+
+        </div>
+
+
+
+    </div>
+
 
 </section>
 
 
 
-<section class="skills">
 
-<div class="container">
+<!-- ==========================================
+        CAPABILITIES INTRODUCTION
+========================================== -->
 
-<div class="section-title">
 
-<h2>مهارت‌های استخراج شده</h2>
+<section class="search-section">
 
-</div>
 
-<div class="skill-grid">
 
-<div class="skill">Financial Analysis</div>
+    <div class="search-box">
 
-<div class="skill">Critical Thinking</div>
 
-<div class="skill">Problem Solving</div>
 
-<div class="skill">Excel</div>
+        <h2 class="section-title">
 
-<div class="skill">Power BI</div>
 
-<div class="skill">SQL</div>
+            قابلیت‌های سامانه
 
-<div class="skill">Writing</div>
 
-<div class="skill">Communication</div>
+        </h2>
 
-</div>
 
-</div>
+
+        <div class="cards">
+
+
+
+            <div class="card">
+
+
+                <div class="card-icon">
+                    01
+                </div>
+
+
+                <h3>
+                    تحلیل شایستگی
+                </h3>
+
+
+                <p>
+
+
+                    شناسایی و تحلیل شایستگی‌های کلیدی موردنیاز
+                    برای احراز موفقیت‌آمیز پست سازمانی.
+
+
+                </p>
+
+
+            </div>
+
+
+
+
+            <div class="card">
+
+
+                <div class="card-icon">
+                    02
+                </div>
+
+
+                <h3>
+                    ارزیابی ریسک عدم احراز
+                </h3>
+
+
+                <p>
+
+
+                    بررسی میزان ریسک عدم احراز پست و شناسایی
+                    عوامل مؤثر بر این ریسک.
+
+
+                </p>
+
+
+            </div>
+
+
+
+
+            <div class="card">
+
+
+                <div class="card-icon">
+                    03
+                </div>
+
+
+                <h3>
+                    مسیر توسعه
+                </h3>
+
+
+                <p>
+
+
+                    پیشنهاد مسیر توسعه شغلی و آموزشی متناسب
+                    با نیازهای پست و شکاف‌های شایستگی.
+
+
+                </p>
+
+
+            </div>
+
+
+
+
+            <div class="card">
+
+
+                <div class="card-icon">
+                    04
+                </div>
+
+
+                <h3>
+                    گزارش مدیریتی
+                </h3>
+
+
+                <p>
+
+
+                    ارائه تصویری یکپارچه و قابل استفاده برای
+                    تصمیم‌گیری مدیران و متخصصان منابع انسانی.
+
+
+                </p>
+
+
+            </div>
+
+
+
+        </div>
+
+
+
+    </div>
+
 
 </section>
-<section class="roadmap">
 
-<div class="container">
 
-<div class="section-title">
 
-<h2>مسیر توسعه پیشنهادی</h2>
 
-<p>دوره‌های آموزشی پیشنهاد شده توسط SHAYDA AI</p>
+<!-- ==========================================
+            RESULTS / DASHBOARD
+        Initially Hidden
+========================================== -->
 
-</div>
 
-<div class="roadmap-grid">
+<section
+    id="resultsSection"
+    class="dashboard"
+    style="display:none;"
+>
 
-<div class="road-item">
-<div class="number">01</div>
-<h3>اصول حسابداری</h3>
-<p>Accounting Fundamentals</p>
-</div>
 
-<div class="road-item">
-<div class="number">02</div>
-<h3>تحلیل مالی</h3>
-<p>Financial Analysis</p>
-</div>
 
-<div class="road-item">
-<div class="number">03</div>
-<h3>Power BI</h3>
-<p>Dashboard & Reporting</p>
-</div>
+    <div class="result-panel">
 
-<div class="road-item">
-<div class="number">04</div>
-<h3>هوش تجاری</h3>
-<p>Business Intelligence</p>
-</div>
 
-</div>
 
-</div>
+        <h2 class="section-title">
+
+
+            گزارش تحلیل هوشمند پست
+
+
+        </h2>
+
+
+
+
+        <!-- ==================================
+                SUMMARY CARDS
+        =================================== -->
+
+
+        <div class="cards">
+
+
+
+            <div class="card">
+
+
+                <div class="card-icon">
+                    S
+                </div>
+
+
+                <h3>
+                    SHAYDA Score
+                </h3>
+
+
+                <p id="shaydaScore">
+                    —
+                </p>
+
+
+            </div>
+
+
+
+
+            <div class="card">
+
+
+                <div class="card-icon">
+                    %
+                </div>
+
+
+                <h3>
+                    درصد تطابق
+                </h3>
+
+
+                <p id="matchScore">
+                    —
+                </p>
+
+
+            </div>
+
+
+
+
+            <div class="card">
+
+
+                <div class="card-icon">
+                    R
+                </div>
+
+
+                <h3>
+                    ریسک عدم احراز
+                </h3>
+
+
+                <p id="riskScore">
+                    —
+                </p>
+
+
+            </div>
+
+
+
+
+            <div class="card">
+
+
+                <div class="card-icon">
+                    P
+                </div>
+
+
+                <h3>
+                    سطح پست
+                </h3>
+
+
+                <p id="resultPostLevel">
+                    —
+                </p>
+
+
+            </div>
+
+
+
+        </div>
+
+
+
+
+        <!-- ==================================
+                JOB SUMMARY
+        =================================== -->
+
+
+        <div class="grid">
+
+
+
+            <div class="widget">
+
+
+                <h4>
+                    اطلاعات پست
+                </h4>
+
+
+                <ul>
+
+
+                    <li>
+                        عنوان پست:
+                        <strong id="resultPostTitle">
+                            —
+                        </strong>
+                    </li>
+
+
+                    <li>
+                        کد پست:
+                        <strong id="resultPostCode">
+                            —
+                        </strong>
+                    </li>
+
+
+                    <li>
+                        واحد سازمانی:
+                        <strong id="resultOrganizationalUnit">
+                            —
+                        </strong>
+                    </li>
+
+
+                </ul>
+
+
+            </div>
+
+
+
+
+            <div class="widget">
+
+
+                <h4>
+                    خلاصه تحلیل شغل
+                </h4>
+
+
+                <p id="jobSummary">
+
+
+                    نتیجه تحلیل پس از پردازش اطلاعات نمایش داده می‌شود.
+
+
+                </p>
+
+
+            </div>
+
+
+
+        </div>
+
+
+
+
+        <!-- ==================================
+                RISK ANALYSIS
+        =================================== -->
+
+
+        <div class="widget">
+
+
+            <h4>
+                تحلیل ریسک عدم احراز
+            </h4>
+
+
+            <p id="riskExplanation">
+
+
+                دلایل و عوامل مؤثر بر ریسک عدم احراز پس از تحلیل
+                در این بخش نمایش داده خواهد شد.
+
+
+            </p>
+
+
+        </div>
+
+
+
+
+        <!-- ==================================
+                10 COMPETENCIES
+        =================================== -->
+
+
+        <div class="widget">
+
+
+            <h4>
+                ۱۰ شایستگی کلیدی
+            </h4>
+
+
+
+            <table>
+
+
+                <thead>
+
+
+                    <tr>
+
+
+                        <th>
+                            ردیف
+                        </th>
+
+
+                        <th>
+                            شایستگی
+                        </th>
+
+
+                        <th>
+                            تعریف شایستگی
+                        </th>
+
+
+                        <th>
+                            سطح موردنیاز
+                        </th>
+
+
+                        <th>
+                            سطح فعلی
+                        </th>
+
+
+                        <th>
+                            شکاف
+                        </th>
+
+
+                    </tr>
+
+
+                </thead>
+
+
+
+                <tbody id="competenciesTable">
+
+
+                    <tr>
+
+
+                        <td colspan="6">
+
+
+                            اطلاعات شایستگی‌ها پس از تحلیل نمایش داده می‌شود.
+
+
+                        </td>
+
+
+                    </tr>
+
+
+                </tbody>
+
+
+            </table>
+
+
+        </div>
+
+
+
+
+        <!-- ==================================
+                SKILLS
+        =================================== -->
+
+
+        <div class="grid">
+
+
+
+            <div class="widget">
+
+
+                <h4>
+                    مهارت‌های تخصصی
+                </h4>
+
+
+                <ul id="technicalSkills">
+
+
+                    <li>
+                        پس از تحلیل نمایش داده می‌شود.
+                    </li>
+
+
+                </ul>
+
+
+            </div>
+
+
+
+
+            <div class="widget">
+
+
+                <h4>
+                    مهارت‌های رفتاری
+                </h4>
+
+
+                <ul id="behavioralSkills">
+
+
+                    <li>
+                        پس از تحلیل نمایش داده می‌شود.
+                    </li>
+
+
+                </ul>
+
+
+            </div>
+
+
+
+
+            <div class="widget">
+
+
+                <h4>
+                    مهارت‌های نرم‌افزاری
+                </h4>
+
+
+                <ul id="softwareSkills">
+
+
+                    <li>
+                        پس از تحلیل نمایش داده می‌شود.
+                    </li>
+
+
+                </ul>
+
+
+            </div>
+
+
+
+
+            <div class="widget">
+
+
+                <h4>
+                    نقاط قوت
+                </h4>
+
+
+                <ul id="strengths">
+
+
+                    <li>
+                        پس از تحلیل نمایش داده می‌شود.
+                    </li>
+
+
+                </ul>
+
+
+            </div>
+
+
+
+        </div>
+
+
+
+
+        <!-- ==================================
+                DEVELOPMENT ROADMAP
+        =================================== -->
+
+
+        <div class="widget">
+
+
+            <h4>
+                مسیر توسعه شغلی
+            </h4>
+
+
+            <div id="developmentRoadmap">
+
+
+                مسیر توسعه پس از تحلیل نمایش داده می‌شود.
+
+
+            </div>
+
+
+        </div>
+
+
+
+
+        <!-- ==================================
+                TRAINING
+        =================================== -->
+
+
+        <div class="widget">
+
+
+            <h4>
+                دوره‌های آموزشی پیشنهادی
+            </h4>
+
+
+            <ul id="trainingCourses">
+
+
+                <li>
+                    دوره‌های پیشنهادی پس از تحلیل نمایش داده می‌شوند.
+                </li>
+
+
+            </ul>
+
+
+        </div>
+
+
+
+
+        <!-- ==================================
+                IMPROVEMENT AREAS
+        =================================== -->
+
+
+        <div class="widget">
+
+
+            <h4>
+                نقاط قابل بهبود
+            </h4>
+
+
+            <ul id="improvementAreas">
+
+
+                <li>
+                    پس از تحلیل نمایش داده می‌شود.
+                </li>
+
+
+            </ul>
+
+
+        </div>
+
+
+
+
+        <!-- ==================================
+                MANAGEMENT RECOMMENDATION
+        =================================== -->
+
+
+        <div class="report">
+
+
+            <h3>
+                پیشنهاد مدیریتی
+            </h3>
+
+
+            <p id="managementRecommendation">
+
+
+                پیشنهاد مدیریتی پس از تحلیل اطلاعات پست
+                و شایستگی‌ها در این بخش نمایش داده خواهد شد.
+
+
+            </p>
+
+
+        </div>
+
+
+
+
+        <!-- ==================================
+                EXPLAINABILITY
+        =================================== -->
+
+
+        <div class="report">
+
+
+            <h3>
+                چرایی نتیجه تحلیل
+            </h3>
+
+
+            <p id="analysisExplanation">
+
+
+                دلایل و عوامل مؤثر بر امتیاز نهایی،
+                درصد تطابق و ریسک عدم احراز در این بخش
+                به صورت شفاف ارائه خواهد شد.
+
+
+            </p>
+
+
+        </div>
+
+
+
+
+        <!-- ==================================
+                PDF BUTTON
+        =================================== -->
+
+
+        <div class="action-area">
+
+
+            <button
+                type="button"
+                id="downloadPdfBtn"
+                class="btn btn-primary"
+            >
+
+
+                دریافت گزارش PDF
+
+
+            </button>
+
+
+        </div>
+
+
+
+    </div>
+
 
 </section>
 
 
 
-<footer class="footer">
 
-<div class="container">
+<!-- ==========================================
+                FOOTER
+========================================== -->
 
-<div class="footer-logo">
 
-<img src="assets/logo/shayda-logo.png" class="shayda-logo">
+<footer>
 
-<h2>SHAYDA AI</h2>
 
-<p>
 
-Smart Human Resource Development Platform
+    <div class="footer-content">
 
-</p>
 
-</div>
 
-<div class="footer-copy">
+        <div class="footer-left">
 
-Designed & Engineered by
 
-<strong>
+            <img
+                src="assets/logo/shayda-logo.png"
+                alt="لوگوی SHAYDA"
+            >
 
-Mr Sj
 
-</strong>
+            <div>
 
-</div>
 
-<div class="footer-version">
+                <h3>
+                    SHAYDA
+                </h3>
 
-Version 1.0
 
-</div>
+                <span>
+                    سامانه هوشمند تحلیل شایستگی و توسعه کارکنان
+                </span>
 
-</div>
+
+            </div>
+
+
+        </div>
+
+
+
+
+        <div class="footer-right">
+
+
+            <h3>
+                Version 1.0
+            </h3>
+
+
+            <span>
+                Designed &amp; Engineered by Mr Sj
+            </span>
+
+
+        </div>
+
+
+
+    </div>
+
+
+
+
+    <div class="signature">
+
+
+        SHAYDA
+
+
+        <br>
+
+
+        Designed &amp; Engineered by
+
+
+        <strong>
+            Mr Sj
+        </strong>
+
+
+    </div>
+
+
 
 </footer>
 
 
 
+
+<!-- ==========================================
+                SCRIPTS
+========================================== -->
+
+
+<script src="js/config.js"></script>
+
+
 <script src="js/app.js"></script>
+
+
 
 </body>
 
+
 </html>
+
+
